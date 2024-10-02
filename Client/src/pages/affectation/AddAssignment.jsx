@@ -100,12 +100,14 @@ const handleSubmit = async (event) => {
                 </div>
               </div>
 
-              <button
-                type='submit'
-                className='bg-[#2680d4] flex text-white font-semibold rounded p-2 mt-4 justify-end place-self-end'
-              >
-                <AiOutlineSave /> Ajouter
-              </button>
+             <div className="flex justify-end">
+                <button
+                  type='submit'
+                  className='flex text-white font-semibold rounded p-2 mt-4 bg-[#2680d4]'
+                >
+                  <AiOutlineSave className="mr-2" /> Ajouter
+                </button>
+              </div>
             </form>
           </div>
         </div>

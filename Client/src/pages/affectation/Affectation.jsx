@@ -1,9 +1,11 @@
 import axios from "axios";
+import * as XLSX from 'xlsx';
 import Header from "../../components/Header"
 import { FaSearch } from "react-icons/fa";
+import {BsFiletypeXlsx} from "react-icons/bs";
 import { useEffect, useState } from "react";
 import PreLoader from "../../components/PreLoader";
-import { MdOutlineAddCircle, MdDelete, MdEdit } from "react-icons/md";
+import { MdOutlineAddCircle } from "react-icons/md";
 import Pagination from "../../components/Pagination";
 import AddAssignment from "./AddAssignment";
 import { ToastContainer, toast } from 'react-toastify';
@@ -123,6 +125,52 @@ const handleSearchChange = (event) => {
   }
 };
 
+
+const exportToExcel = () => {
+  const dataToExport = affectations.map(({ user, hardware, assignmentDate }) => ({
+    Utilisateur: user?.username || 'N/A',
+    Matériel: hardware?.name || 'N/A',
+    'Code IMMO': hardware?.name || 'N/A',
+    Date: assignmentDate || 'indeterminé',
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+  // Appliquer un style à l'en-tête
+  const headerStyle = {
+    font: { bold: true, color: { rgb: 'FFFFFF' } },
+    fill: { fgColor: { rgb: '2F5496' } }, // Couleur de fond
+  };
+
+  // Appliquer le style à la première ligne (en-tête)
+  Object.keys(worksheet).forEach((cell) => {
+    if (cell.startsWith('A1:') || cell.startsWith('B1:') || cell.startsWith('C1:')) {
+      worksheet[cell].s = headerStyle;
+    }
+  });
+
+  // Ajuster la largeur des colonnes
+  const columnWidths = [
+    { wch: 20 }, // User
+    { wch: 20 }, // Hardware
+    { wch: 15 }, // AssignmentDate
+  ];
+
+  worksheet['!cols'] = columnWidths;
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Affectations');
+
+  // Générer un nom de fichier unique
+  const fileName = `affectations_${Date.now()}.xlsx`;
+
+  // Générer le fichier Excel et le télécharger
+  XLSX.writeFile(workbook, fileName);
+};
+
+
+  
+
   return (
     <div>
       <Header title={"Listes des afféctations"} />
@@ -139,15 +187,20 @@ const handleSearchChange = (event) => {
               <FaSearch color='white' />
             </div>
           </div>
-          <div className='flex items-center justify-end gap-[15px] relative'>
-            <button
-              onClick={() => setShowModal(true)}
-              className='bg-[#2fa50b] text-white h-[32px] rounded-[3px] flex items-center justify-center hover:bg-[#ffffff] hover:text-[#2fa50b] hover:border hover:border-black transition-all px-[30px] cursor-pointer'
-              alt='Ajouter nouvelle région'
-            >
-              <MdOutlineAddCircle size={20} />
-            </button>
-          </div>
+           <div className='flex items-center justify-end gap-[15px] relative'>
+        <button
+          onClick={() => setShowModal(true)}
+          className='bg-[#2fa50b] text-white h-[32px] rounded-[3px] flex items-center justify-center hover:bg-[#ffffff] hover:text-[#2fa50b] hover:border hover:border-black transition-all px-[30px] cursor-pointer'
+          alt='Ajouter nouvelle région'
+        >
+          <MdOutlineAddCircle size={20} />
+        </button>
+              <button 
+              onClick={exportToExcel}
+              className='bg-[#3498db] text-white h-[32px] rounded-[3px] flex items-center justify-center hover:bg-[#ffffff] hover:text-[#3498db] hover:border hover:border-black transition-all px-[30px] cursor-pointer'>
+                <BsFiletypeXlsx size={25}/>
+              </button>
+      </div>
         </div>
 
         <table className="border border-gray-700 w-full text-left mt-5">

@@ -2,7 +2,6 @@ const Assignment = require('../models/Assignment');
 const Hardware = require('../models/Hardware');
 const User = require('../models/User');
 const moment = require('moment');
-
 // Méthode pour créer une nouvelle affectation
 const createAssignment = async (req, res) => {
   try {
@@ -97,38 +96,12 @@ const getAssignmentById = async (req, res) => {
   }
 };
 
-// Méthode pour mettre à jour une affectation
-const updateAssignment = async (req, res) => {
-  try {
-    const { user, hardware } = req.body;
-    const assignment = await Assignment.findByIdAndUpdate(req.params.id, { user, hardware }, { new: true });
-    if (!assignment) {
-      return res.status(404).json({ error: 'Affectation non trouvée' });
-    }
-    res.json(assignment);
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la mise à jour de l\'affectation' });
-  }
-};
 
-// Méthode pour supprimer une affectation
-const deleteAssignment = async (req, res) => {
-  try {
-    const assignment = await Assignment.findByIdAndRemove(req.params.id);
-    if (!assignment) {
-      return res.status(404).json({ error: 'Affectation non trouvée' });
-    }
-    res.json({ message: 'Affectation supprimée avec succès' });
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la suppression de l\'affectation' });
-  }
-};
+
 
 module.exports = {
   createAssignment,
   getAllAssignments,
   getAssignmentById,
-  updateAssignment,
-  deleteAssignment,
   releaseHardware,
 };

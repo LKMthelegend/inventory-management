@@ -8,10 +8,9 @@ const softwareSchema = new mongoose.Schema({
   name: { type: String, required: true },
   version: { type: String },
   licence: { type: String },
-  type: { type: String},
-  expiration: {type: Number},
 });
 // Middleware pour intercepter la suppression d'un logiciel
+//afin de permettre de supprimer les reférences stocker dans Hardware
 softwareSchema.pre('remove', async function (next) {
   const software = this;
 

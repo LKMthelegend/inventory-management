@@ -100,6 +100,13 @@ const deleteHardware = async (req, res) => {
   }
 };
 
+// Méthode pour récupérer le nombre de matériels utilisés
+
+
+
+// *****************************************************
+
+
 module.exports = {
   createHardware,
   getAllHardware,
@@ -107,4 +114,5 @@ module.exports = {
   updateHardware,
   deleteHardware,
   getHardwaresByStatus,
+  // getUsedHardwareCount,
 };

@@ -74,24 +74,34 @@ const handlePageClick = ({ selected }) => {
     setCurrentPage(0);
   };
 // Créer un matériel
-  const addHardware = async (formData) => {
-    try {
-      axios.post('http://localhost:8080/hardwares', formData);
+const addHardware = async (formData) => {
+  try {
+    const response = await axios.post('http://localhost:8080/hardwares', formData);
+
+    // Vérification de la réponse après l'ajout
+    console.log('Réponse après ajout :', response);
+
+    if (response.data) {
+      // Créer une nouvelle copie des matériels avec les données du nouvel élément ajouté
+      const updatedMateriels = [...materiels, response.data];
+      // Mettre à jour l'état local avec la nouvelle copie
+      setMateriels(updatedMateriels);
       setShowModal(false);
       toast.success('Enregistrer avec succès', {
         position: 'top-right',
         autoClose: 5000,
       });
-      fetchHardware();
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout du matériel : ', error);
-      toast.error('Une erreur s\'est produite lors de l\'ajout du service.', {
-        position: 'top-right',
-        autoClose: 3000,
-      });
-      throw error;
     }
-  };
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout du matériel : ', error);
+    toast.error('Une erreur s\'est produite lors de l\'ajout du service.', {
+      position: 'top-right',
+      autoClose: 3000,
+    });
+    throw error;
+  }
+};
+
 
   const fetchAvailableSoftware = async () => {
   try {
@@ -169,6 +179,14 @@ const handleEditHardware = async (hardware) => {
   }
 };
 const handleDelete = async (materiel) => {
+  if (materiel.status) {
+    toast.error("Vous ne pouvez pas supprimer ce matériel car il est en cours d'utilisation.", {
+      position: 'top-right',
+      autoClose: 5000,
+    });
+    return;
+  }
+
     Swal.fire({
       title: `Etes vous sur de vouloir supprimer ${materiel.name}?`,
       text: "Cette action est irreversible!",
@@ -275,7 +293,9 @@ const handleDelete = async (materiel) => {
                     </button>
                     <button
                       onClick={() => handleDelete(hardware)}
-                      className='flex justify-center items-center mx-2 px-3.5 text-red-600'><MdDelete size={20} />
+                      className='flex justify-center items-center mx-2 px-3.5 text-red-600'
+                      // disabled={hardware.status}
+                      ><MdDelete size={20} />
                     </button>
                   </span>
                 </td>

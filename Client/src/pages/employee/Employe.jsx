@@ -112,28 +112,39 @@ useEffect(() => {
 
 
   const handleDelete = async (employe) => {
-    Swal.fire({
-      title: `Etes vous sur de vouloir supprimer ${employe.username}?`,
-      text: "Cette action est irreversible!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: "Annuler",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(`http://localhost:8080/users/${employe._id}`);
-          setEmployes(employes.filter((p) => p._id !== employe._id));
-          fetchData();
-          Swal.fire('Suppession efféctuée', 'avec succès!');
-        } catch (error) {
-          console.error("Erreur lors de la suppression de l'employé :", error);
-          Swal.fire('Erreur lors de la suppression', 'Une erreur s\'est produite.', 'error');
-        }
+    try {
+      const userId = employe._id;
+    const response = await axios.get(`http://localhost:8080/check-user/${userId}`);
+    const affectedHardware = response.data;
+
+    if (affectedHardware.length > 0) {
+      Swal.fire({
+        title: 'Erreur de suppression',
+        text: 'Cet utilisateur est affecté à un matériel. Veuillez retirer l\'affectation avant de le supprimer.',
+        icon: 'error',
+      });
+    } else {
+      const confirmDelete = await Swal.fire({
+        title: `Êtes-vous sûr de vouloir supprimer ${employe.username}?`,
+        text: 'Cette action est irréversible!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, supprimer!',
+        cancelButtonText: 'Annuler',
+      });
+
+      if (confirmDelete.isConfirmed) {
+        await axios.delete(`http://localhost:8080/users/${userId}`);
+        setEmployes(employes.filter((u) => u._id !== employe._id));
+        Swal.fire('Suppression effectuée', 'Utilisateur supprimé avec succès!', 'success');
       }
-    });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la suppression de l\'utilisateur :', error);
+    Swal.fire('Erreur lors de la suppression', 'Une erreur s\'est produite.', 'error');
+  }
   };
 
 //EDITER un employé

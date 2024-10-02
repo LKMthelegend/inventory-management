@@ -3,7 +3,7 @@ import {FaBars, FaObjectGroup, FaTachometerAlt} from 'react-icons/fa'
 import {BsPersonGear, BsArrowLeftRight} from 'react-icons/bs'
 import { IoHardwareChipOutline } from "react-icons/io5";
 import { MdOutlineInventory2 } from "react-icons/md";
-import { VscTools } from "react-icons/vsc";
+// import { VscTools } from "react-icons/vsc";
 import { NavLink, Outlet } from 'react-router-dom'
 import Logo from '../assets/logo_fid.png'
 import '../App.css'
@@ -18,7 +18,7 @@ export default function Sidebar() {
   },
   {
     path: "/employee",
-    name: "employée",
+    name: "Employé",
     icon: <BsPersonGear />
   },
   {
@@ -41,11 +41,11 @@ export default function Sidebar() {
     name: "Afféctation",
     icon: <BsArrowLeftRight />
   },
-  {
-    path: "/preference",
-    name: "Préférence",
-    icon: <VscTools />  
-  }
+  // {
+  //   path: "/compte",
+  //   name: "Compte",
+  //   icon: <VscTools />  
+  // }
 ]
   return (
     <div className='container' style={{ display: 'flex', height: '100vh' }}>
@@ -67,7 +67,7 @@ export default function Sidebar() {
             ))
           }
         </div>
-        <main style={{ marginLeft: isOpen ? "250px" : "50px", width: '100%', overflowY: 'auto' }}  className='w-full'>
+        <main style={{ marginLeft: isOpen ? '300px' : '50px', width: isOpen ? 'calc(100% - 300px)' : 'calc(100% - 50px)', overflowY: 'auto' }}  className='w-full'>
           <Outlet />
         </main>
     </div>

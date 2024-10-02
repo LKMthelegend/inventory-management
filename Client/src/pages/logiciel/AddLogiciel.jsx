@@ -54,12 +54,19 @@ const initialFormData = {
                             <div>
                               <label htmlFor="licence" className='block text-sm font-medium text-gray-700'>Licence</label>
                               <div className='mt-1'>
-                                <input id='licence' className='w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' type="text" name="licence" value={formData.licence} onChange={handleChange}  autoComplete='off' required />
+                                <input id='licence' className='w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' type="text" name="licence" value={formData.licence} onChange={handleChange}  autoComplete='off' />
                               </div>
                             </div>
+                            <div className="flex justify-end">
+                <button
+                  type='submit'
+                  className='flex text-white font-semibold rounded p-2 mt-4 bg-[#2680d4]'
+                >
+                  <AiOutlineSave className="mr-2" /> Ajouter
+                </button>
+              </div>
                             
 
-                        <button type="submit" className='bg-[#2680d4] flex text-white font-semibold rounded p-2 mt-4 justify-end place-self-end'><AiOutlineSave/> Ajouter</button>
                         </form>
                         </div>
 

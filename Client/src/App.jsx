@@ -14,6 +14,7 @@ import Materiel from "./pages/materiel/Materiel";
 import Logiciel from "./pages/logiciel/Logiciel";
 import Affectation from "./pages/affectation/Affectation";
 import Service from "./pages/service/Service";
+import Compte from "./pages/Compte";
 
 function App() {
   
@@ -44,6 +45,7 @@ function App() {
             <Route path="logiciel" element={<Logiciel />} />
             <Route path="service" element={<Service />}  />
             <Route path="affectation" element={<Affectation />} />
+            <Route path="compte" element={<Compte/>} />
           </Route>
         )}
         <Route path="/signup" element={<Signup />} />

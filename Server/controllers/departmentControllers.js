@@ -19,7 +19,7 @@ const createDepartment = async (req, res) => {
 //Méthode pour récupérer tous les départements
 const getAllDepartments = async (req, res) => {
     try {
-        const departments = await Department.find().populate('manager');
+        const departments = await Department.find().populate('manager').sort({ name: 1 });
         res.json(departments);
     } catch (error) {
         res.status(500).json({ error: 'Erreur lors de la récupération des départements'});

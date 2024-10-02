@@ -5,8 +5,6 @@
 
 const Signup = () => {
     const [data, setData] = useState({
-        firstName: "",
-        lastName: "",
         email: "",
         password: ""
     });
@@ -20,6 +18,7 @@ const Signup = () => {
 
     const handleSubmit =async (e) => {
         e.preventDefault();
+        console.log(data);
         try {
             const url = "http://localhost:8080/api/utilisateurs";
             const {data:res} = await axios.post(url, data);
@@ -37,30 +36,12 @@ const Signup = () => {
                 <div className={styles.left}>
                     <h1>Welcome back</h1>
                     <Link to="/login">
-                        <button type='button' className={styles.white_btn}>Sign in</button>
+                        <button type='button' >Sign in</button>
                     </Link>
                 </div>
                 <div className={styles.right}>
                     <form className={styles.form_container} onSubmit={handleSubmit}>
                         <h1>Create Account</h1>
-                        <input 
-                        type="text"
-                        placeholder='First Name'
-                        name='firstName'
-                        onChange={handleChange}
-                        value={data.firstName}
-                        required
-                        className={styles.input} 
-                        />
-                        <input 
-                        type="text"
-                        placeholder='Last Name'
-                        name='lastName'
-                        onChange={handleChange}
-                        value={data.lastname}
-                        required
-                        className={styles.input} 
-                        />
                         <input 
                         type="email"
                         placeholder='Email'

@@ -12,7 +12,9 @@ const userRoutes = require('./routes/userRoutes');
 const hardwareRoutes = require('./routes/hardwareRoutes');
 const softwareRoutes = require('./routes/softwareRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
-const regionRoutes = require('./routes/regionRoutes');
+const countHardwareRoutes = require("./routes/countHardwareRoutes");
+const checkUserRoutes = require("./routes/checkUserRoutes");
+const countUserWithHardware = require("./routes/countUserWithHardwareRoutes");
 
 //Database connection
 connection();
@@ -30,7 +32,9 @@ app.use('/users', userRoutes);
 app.use('/hardwares', hardwareRoutes);
 app.use('/softwares', softwareRoutes);
 app.use('/assignments', assignmentRoutes);
-app.use('/regions', regionRoutes);
+app.use('/count-hardwares', countHardwareRoutes);
+app.use('/check-user', checkUserRoutes);
+app.use('/user-with-hardwares', countUserWithHardware);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Ecoute sur le port ${port} ...`))

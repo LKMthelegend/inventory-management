@@ -6,7 +6,7 @@ const hardwareSchema = new mongoose.Schema({
   serialNumber: { type: String, required: true },
   date: { type: Date, default: new Date() },
   status:{type:Boolean, default: false},
-  software: [{type: mongoose.Schema.Types.ObjectId, ref: 'Software'}],
+  software: [{type: mongoose.Schema.Types.ObjectId, ref: 'Software'}], //Référence aux logiciels installée dans chaque ordinateur
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Référence à l'utilisateur auquel ce matériel est affecté
 });
 
