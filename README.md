@@ -1,5 +1,5 @@
-This is a simple app to manage inventory developped with MERN stack
-functionnality:
+This is a simple app to manage inventory developped with MERN stack.
+Functionnality:
 - authentication (Administration only)
 - software management
 - material management
